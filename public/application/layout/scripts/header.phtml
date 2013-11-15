@@ -1,11 +1,23 @@
-<header id="header">
-  <figure id="logo"></figure>
-  <nav>
-    <a href="/" class="<?php echo $this->selected == 'index'? 'selected':''; ?>" title="Home">Home</a>
-    <a href="/index/news" class="<?php echo $this->selected == 'news'? 'selected':''; ?>" title="News">News</a>
-    <a href="/index/tour" class="<?php echo $this->selected == 'tour'? 'selected':''; ?>" title="Tour dates and clinics">Tour</a>
-    <a href="/index/gallery" class="<?php echo $this->selected == 'gallery'? 'selected':''; ?>" title="Images and Videos">Gallery</a>
-    <a href="/index/discography" class="<?php echo $this->selected == 'discography'? 'selected':''; ?>" title="Discography and Bootlegs">Discography</a>
-    <a href="/index/the-band" class="<?php echo $this->selected == 'the-band'? 'selected':''; ?>" title="The Band">The Band</a>
-  </nav>
+<header id="header" class="row">
+  <div class="span8">
+    <figure id="logo"></figure>
+    <nav>
+      <a href="/" class="<?php echo $this->selected == 'index'? 'selected':''; ?>" title="Home">Home</a>
+      <a href="/index/news" class="<?php echo $this->selected == 'news'? 'selected':''; ?>" title="News">News</a>
+      <a href="/index/tour" class="<?php echo $this->selected == 'tour'? 'selected':''; ?>" title="Tour dates and clinics">Tour</a>
+      <a href="/index/gallery" class="<?php echo $this->selected == 'gallery'? 'selected':''; ?>" title="Images and Videos">Gallery</a>
+      <a href="/index/discography" class="<?php echo $this->selected == 'discography'? 'selected':''; ?>" title="Discography and Bootlegs">Discography</a>
+      <a href="/index/the-band" class="<?php echo $this->selected == 'the-band'? 'selected':''; ?>" title="The Band">The Band</a>
+    </nav>
+  </div>
+  <div class="span4 social">
+    <img src="/img/social-icons.png" class="map" id="social-links" usemap="#social-links" border="0" width="471" height="77" alt=""/>
+  </div>
+  <map id="_social-links" name="social-links">
+    <area shape="rect" coords="4,4,45,72" href="http://www.facebook.com/Vastator" target="_blank" alt="Siguenos en Facebook" title="Siguenos en Facebook" />
+    <area shape="rect" coords="110,4,70,72" href="https://twitter.com/vastatorband" target="_blank" alt="Siguenos en Twitter" title="Siguenos en Twitter" />
+    <area shape="rect" coords="135,4,175,72" href="http://www.instagram.com/vastatoronline" target="_blank" alt="Siguenos en Instagram" title="Siguenos en Instagram" />
+    <area shape="rect" coords="200,4,238,72" href="http://www.youtube.com/vastatoronline" target="_blank" alt="Siguenos en Youtube" title="Siguenos en Youtube" />
+    <area shape="rect" coords="263,4,324,72" href="#" alt="Siguenos en SoundCloud" title="Siguenos en SoundCloud" />
+  </map>
 </header>

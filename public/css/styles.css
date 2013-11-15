@@ -35,6 +35,9 @@ body {
 #header figure {
   margin: 0;
 }
+#header .social {
+    margin-top: 100px;
+}
 .news {
   margin-bottom: 50px;
 }
