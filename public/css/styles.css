@@ -3,11 +3,13 @@ body {
   font-family: "Myriad Pro";
   color: #FFF;
   font-style: italic;
+  background-image: url(/img/bg.jpg);
+  background-repeat: no-repeat;
 }
 #logo {
   background-image: url(/img/logo.png);
-  height: 228px;
-  width: 480px;
+  height: 245px;
+  width: 490px;
 }
 #header {
   margin-bottom: 20px;
@@ -17,14 +19,18 @@ body {
   padding: 0;
 }
 #header nav a {
+  text-shadow: 4px 4px 2px rgba(0, 0, 0, 1);
   color: #FFF;
   font-weight: bold;
   font-size: 25px;
   text-decoration: none;
   margin-right: 10px;
 }
+#header nav a.selected {
+  color: #bf0000;
+}
 #header nav a:hover {
-  color: #B34242;
+  color: #bf0000;
 }
 #header figure {
   margin: 0;
@@ -33,11 +39,15 @@ body {
   margin-bottom: 50px;
 }
 .news .more a:hover {
-  color: #B34242;
+  color: #bf0000;
 }
 .news .more a {
   text-decoration: none;
   font-size: 20px;
   font-weight: bold;
-  color: #B34242;
+  color: #bf0000;
+}
+.the-band {
+  width: 940px;
+  overflow: hidden;
 }

@@ -5,7 +5,7 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        $this->view->selected = $this->_request->getActionName();
     }
 
     public function indexAction()
