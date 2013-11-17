@@ -1,17 +1,16 @@
 <div class="slider-wrapper theme-default">
   <div id="slider" class="nivoSlider">
-    <img src="/img/gallery/vast1.jpg" data-thumb="/img/gallery/vast1.jpg" alt="" />
-    <img src="/img/gallery/vast2.jpg" data-thumb="/img/gallery/vast2.jpg" alt="" />
-    <img src="/img/gallery/vast3.jpg" data-thumb="/img/gallery/vast3.jpg" alt="" />
+  <?php foreach($this->photos as $photo): ?>
+    <img src="/img/gallery/<?php echo $photo?>" data-thumb="/img/gallery/<?php echo $photo; ?>" alt="" />
+  <?php endforeach; ?>
   </div>
 </div>
 <div class="row">
+  <?php foreach($this->videos as $video): ?>
   <div class="span6">
-    <iframe width="465" height="349" src="//www.youtube.com/embed/yLhNTFiDTF4" frameborder="0" allowfullscreen></iframe>
+    <iframe width="465" height="349" src="//www.youtube.com/embed/<?php echo $video; ?>" frameborder="0" allowfullscreen></iframe>
   </div>
-  <div class="span6">
-    <iframe width="465" height="349" src="//www.youtube.com/embed/bXd1N9_DJ58" frameborder="0" allowfullscreen></iframe>
-  </div>
+  <?php endforeach; ?>
 </div>
 <script type="text/javascript">
 $(window).load(function() {
