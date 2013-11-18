@@ -36,7 +36,9 @@ class IndexController extends Zend_Controller_Action
 
     public function newsAction()
     {
-        // action body
+        $news = new Application_Model_DbTable_News();
+        $newsData = $news->fetchAll($news->select()->order('created DESC'));
+        $this->view->news = $newsData->toArray();
     }
 
     public function detailAction()

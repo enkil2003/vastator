@@ -1,11 +1,14 @@
 <div class="row">
+  <?php foreach($this->news as $news):?>
   <div class="span9 news">
-    <h3>Nueva web, nuevas presentaciones, nuevos discos</h3>
-    <p>Publicado:<br />Noviembre 15 de 2013</p>
-    <p><img src="/img/gallery/vast1.jpg" style="float: left"/>
-    Estamos estrenando nueva web. Preparando los temas de lo que sera nuestro nueva producción. Asi como tambien la
-    grabación de una presentación en vivo programada para el 4 de enero de 2014</p>
+    <h3><?php echo $news['title']; ?></h3>
+    <p>Publicado:<br /><?php echo $news['created']; ?></p>
+    <?php if ($news['image'] != ''): ?>
+    <img src="/img/gallery/<?php echo $news['image']; ?>" />
+    <?php endif; ?>
+    <?php echo $news['comment']; ?>
   </div>
+  <?php endforeach; ?>
 <!--
   <div class="span6 news">
     <h3> News Title</h3>
