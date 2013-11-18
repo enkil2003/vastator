@@ -8,6 +8,11 @@ class Application_Form_News extends Zend_Form
         $this->setAttrib('enctype', 'multipart/form-data');
         
         $this->addElement(
+            'hidden',
+            'id'
+        );
+        
+        $this->addElement(
             'text',
             'title',
             array(
@@ -52,6 +57,21 @@ class Application_Form_News extends Zend_Form
                 'label' => 'Agregar'
             )
         );
+    }
+    
+    public function populate(array $data)
+    {
+        if ($data['image'] != '') {
+            $this->addElement(
+                'hidden',
+                'thumb',
+                array(
+                    'value' => $data['image'],
+                )
+            );
+            unset($data['image']);
+        }
+        parent::populate($data);
     }
 
 }

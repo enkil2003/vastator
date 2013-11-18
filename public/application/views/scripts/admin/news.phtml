@@ -1,7 +1,32 @@
 <h3>Noticias</h3>
-<?php
-if (isset($this->message)) {
-    echo $this->message;
-}
-echo $this->form;
-?>
+<form>
+<select id="newsABM">
+<?php foreach($this->news as $news):?>
+  <option value="<?php echo $news['id'];?>"><?php echo $news['title']?></option>
+<?php endforeach;?>
+</select>
+<br />
+<br />
+<button id="addNews" type="button">Nueva</button> 
+<button id="editNews" type="button">Editar</button> 
+<button id="deleteNews" type="button">Eliminar</button>
+</form>
+<script language="javascript">
+$('#addNews').on({
+    'click': function() {
+        window.location = '/admin/add-news';
+    }
+});
+$('#editNews').on({
+    'click': function() {
+        window.location = '/admin/add-news?id=' + $('#newsABM').val();
+    }
+});
+$('#deleteNews').on({
+    'click': function() {
+        if (confirm('Esta seguro que quiere eliminar la noticia? Esta accion no puede deshacerse')) {
+            window.location = '/admin/delete-news?id=' + $('#newsABM').val();
+        }
+    }
+});
+</script>

@@ -1,0 +1,12 @@
+<h3>Noticias</h3>
+<?php
+if (isset($this->message)) {
+    echo $this->message;
+}
+echo $this->form;
+?>
+<script language="javascript">
+if ($('#thumb').length) {
+    $('#image').parent().append('<br /><img src="' + '/img/gallery/' + $('#id').val() + '/' + $('#thumb').val() + '" width="150" />');
+}
+</script>

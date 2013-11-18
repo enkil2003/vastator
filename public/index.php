@@ -13,6 +13,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+define('GALLERY_PATH', realpath(APPLICATION_PATH . '/../img/gallery'));
+
 /* Zend_Application */
 require_once 'Zend/Application.php';
 

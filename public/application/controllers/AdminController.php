@@ -13,6 +13,7 @@ class AdminController extends Zend_Controller_Action
             $this->_redirect('/admin/login');
             exit;
         }
+        $this->News = new Application_Model_DbTable_News();
         $this->_helper->_layout->setLayout('admin');
     }
     
@@ -56,7 +57,8 @@ class AdminController extends Zend_Controller_Action
         $this->view->form = $form;
     }
     
-    public function videosAction() {
+    public function videosAction()
+    {
         $form = new Application_Form_Videos();
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             $videosModel = new Application_Model_DbTable_Videos();
@@ -74,31 +76,85 @@ class AdminController extends Zend_Controller_Action
         }
         $this->view->form = $form;
     }
-
+    
     public function newsAction()
     {
-        $form = new Application_Form_News();
-        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
-            if (!$form->image->receive()) {
-                $this->view->message = 'No se pudo guardar la imagen';
+        $news = $this->News->fetchAll($this->News->select()->order('id'));
+        $this->view->news = $news->toArray();
+    }
+    
+    private function _deleteDir($dirPath) {
+        if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+            $dirPath .= '/';
+        }
+        $files = glob($dirPath . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                $this->_deleteDir($file);
             } else {
-                $newsModel = new Application_Model_DbTable_News();
-                $newsModel->insert(
-                    array(
-                        'title' => $form->title->getValue(),
-                        'image' => $form->image->getValue(),
-                        'youtube' => $form->youtube->getValue(),
-                        'comment' => $form->comment->getValue(),
-                        'created' => date('Y-m-d h:i:s')
-                    )
-                );
-                $form->reset();
-                $this->view->message = "Noticia creada con exito";
+                unlink($file);
             }
+        }
+        rmdir($dirPath);
+    }
+    
+    private function _move_uploaded_file($file, $folder)
+    {
+        $this->_deleteDir(GALLERY_PATH . '/' . $folder);
+        mkdir(GALLERY_PATH . '/' . $folder);
+        copy(
+            GALLERY_PATH . "/{$file}",
+            GALLERY_PATH . "/{$folder}/{$file}"
+        );
+        @unlink(GALLERY_PATH . "/{$file}");
+    }
+    
+    public function addNewsAction()
+    {
+        $form = new Application_Form_News();
+        if ($id = $this->_request->getParam('id', null)) {
+            $news = $this->News->fetchRow("id = $id");
+            $form->populate($news->toArray());
+        }
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            if ($form->id && $form->id->getValue()) {
+                $row = $this->News->fetchRow("id = {$form->id->getValue()}");
+                $created = $row->created;
+            } else {
+                $row = $this->News->fetchNew();
+                $created = date('Y-m-d h:i:s');
+            }
+            $row->title = $form->title->getValue();
+            $row->youtube = $form->youtube->getValue();
+            $row->comment = $form->comment->getValue();
+            $row->created = $created;
+            
+            $row->save();
+            
+            if ($form->image->getValue()) {
+                $form->image->receive();
+                $this->_move_uploaded_file($form->image->getValue(), $row->id);
+                $image = $form->image->getValue();
+                $row->image = $image;
+                $row->save();
+            }
+            
+            $this->view->message = "Notícia creada con éxito";
         }
         $this->view->form = $form;
     }
 
+    public function deleteNewsAction()
+    {
+        if ($id = $this->_request->getParam('id', null)) {
+            $row = $this->News->fetchRow("id = $id");
+            $this->_deleteDir(GALLERY_PATH . '/' . $id);
+            $row->delete();
+            $this->_redirect('/admin/news');
+            exit;
+        }
+    }
+    
     public function tourAction()
     {
         $form = new Application_Form_Tour();

@@ -4,7 +4,7 @@
     <h3><?php echo $news['title']; ?></h3>
     <p>Publicado:<br /><?php echo $news['created']; ?></p>
     <?php if ($news['image'] != '' && !is_null($news['youtube'])): ?>
-    <img src="/img/gallery/<?php echo $news['image']; ?>" />
+    <img src="/img/gallery/<?php echo $news['id']; ?>/<?php echo $news['image']; ?>" />
     <?php endif; ?>
     <?php if ($news['youtube'] != ''): ?>
     <iframe width="700" height="525" src="//www.youtube.com/embed/<?php echo $news['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
