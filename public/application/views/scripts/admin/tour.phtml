@@ -1,12 +1,26 @@
 <h3>Tour</h3>
-<?php
-if (isset($this->message)) {
-    echo $this->message;
-}
-echo $this->form;
-?>
-<script>
-$(function() {
-    $('[name="created"]').datepicker();
+<form>
+<select id="tourABM">
+<?php foreach($this->tour as $tour):?>
+  <option value="<?php echo $tour['id'];?>"><?php echo $tour['created']; ?> | <?php echo $tour['location']; ?></option>
+<?php endforeach;?>
+</select>
+<br />
+<br />
+<button id="addTour" type="button">Nueva</button> 
+<button id="deleteTour" type="button">Eliminar</button>
+</form>
+<script language="javascript">
+$('#addTour').on({
+    'click': function() {
+        window.location = '/admin/add-tour';
+    }
+});
+$('#deleteTour').on({
+    'click': function() {
+        if (confirm('Esta seguro que quiere eliminar esta fecha? Esta accion no puede deshacerse')) {
+            window.location = '/admin/delete-tour?id=' + $('#tourABM').val();
+        }
+    }
 });
 </script>

@@ -15,6 +15,7 @@ class AdminController extends Zend_Controller_Action
         }
         $this->view->messages = $this->_helper->flashMessenger->getMessages();
         $this->News = new Application_Model_DbTable_News();
+        $this->Tour = new Application_Model_DbTable_Tour();
         $this->_helper->_layout->setLayout('admin');
     }
     
@@ -173,10 +174,15 @@ class AdminController extends Zend_Controller_Action
     
     public function tourAction()
     {
+        $tourData = $this->Tour->fetchAll($this->Tour->select()->order('created DESC'));
+        $this->view->tour = $tourData->toArray();
+    }
+
+    public function addTourAction()
+    {
         $form = new Application_Form_Tour();
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
-            $tourModel = new Application_Model_DbTable_Tour();
-            $tourModel->insert(
+            $this->Tour->insert(
                 array(
                     'location' => $form->location->getValue(),
                     'created' => $form->created->getValue()
@@ -188,6 +194,17 @@ class AdminController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function deleteTourAction()
+    {
+        if ($id = $this->_request->getParam('id', null)) {
+            $row = $this->Tour->fetchRow("id = $id");
+            $row->delete();
+            $this->_helper->flashMessenger->addMessage("Tour eliminado con éxito");
+            $this->_redirect('/admin/tour');
+            exit;
+        }
+    }
+    
     public function theBandAction()
     {
         $form = new Application_Form_Theband();
