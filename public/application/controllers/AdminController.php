@@ -39,17 +39,27 @@ class AdminController extends Zend_Controller_Action
         exit;
     }
     
+    private function _shrinkImage($pathToImage)
+    {
+        try {
+            require_once APPLICATION_PATH . "/../library/PEAR/WideImage/WideImage.php";
+            $image = WideImage::load($pathToImage);
+            $image->resize(self::IMAGE_WIDTH, self::IMAGE_HEIGHT, 'outside')
+                ->crop('center', 'center', self::IMAGE_WIDTH, self::IMAGE_HEIGHT)
+                ->saveToFile($pathToImage, self::IMAGE_QUALITY);
+        } catch (Exception $e) {
+            throw new Exception("No se pudo achicar la imagen");
+        }
+        return true;
+    }
+    
     public function indexAction() {
         $form = new Application_Form_Slider();
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             if (!$form->image->receive()) {
                 $this->view->message = 'No se pudo guardar la imagen';
             } else {
-                require_once APPLICATION_PATH . "/../library/PEAR/WideImage/WideImage.php";
-                $image = WideImage::load(APPLICATION_PATH . '/../img/slider/' . $form->image->getValue());
-                $image->resize(self::IMAGE_WIDTH, self::IMAGE_HEIGHT, 'outside')
-                    ->crop('center', 'center', self::IMAGE_WIDTH, self::IMAGE_HEIGHT)
-                    ->saveToFile(APPLICATION_PATH . '/../img/slider/' . $form->image->getValue(), self::IMAGE_QUALITY);
+                $this->_shrinkImage($pathToImage);
                 $form->reset();
                 $this->view->message = "Imagen agregada con exito";
             }
@@ -101,6 +111,7 @@ class AdminController extends Zend_Controller_Action
     private function _move_uploaded_file($file, $folder)
     {
         $this->_deleteDir(GALLERY_PATH . '/' . $folder);
+        $this->_shrinkImage(GALLERY_PATH . "/{$file}");
         mkdir(GALLERY_PATH . '/' . $folder);
         copy(
             GALLERY_PATH . "/{$file}",
