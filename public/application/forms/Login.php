@@ -27,7 +27,7 @@ class Application_Form_Login extends Zend_Form
             'submit',
             'login',
             array(
-                'label' => 'Agregar'
+                'label' => 'Ingresar'
             )
         );
     }
