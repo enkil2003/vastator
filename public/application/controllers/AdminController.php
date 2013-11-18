@@ -5,9 +5,37 @@ class AdminController extends Zend_Controller_Action
     const IMAGE_WIDTH = 860;
     const IMAGE_HEIGHT = 500;
     const IMAGE_QUALITY = 75;
+    
     public function init()
     {
+        $this->user = new Zend_Session_Namespace('user');
+        if (!isset($this->user->logged) && $this->_request->getActionName() != 'login') {
+            $this->_redirect('/admin/login');
+            exit;
+        }
         $this->_helper->_layout->setLayout('admin');
+    }
+    
+    public function loginAction()
+    {
+        $form = new Application_Form_Login();
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            if ($form->user->getValue() == 'v4st4t0r' && $form->password->getValue() == 'tator771r') {
+                $this->user->logged = true;
+                $this->_redirect('/admin/');
+                exit;
+            } else {
+                $this->view->message = "usuario o contraseña incorrectos";
+            }
+        }
+        $this->view->form = $form;
+    }
+    
+    public function logoutAction()
+    {
+        $this->user->unsetAll();
+        $this->_redirect('/');
+        exit;
     }
     
     public function indexAction() {

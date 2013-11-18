@@ -19,6 +19,7 @@
         <formFile formName="Gallery"/>
         <formFile formName="Slider"/>
         <formFile formName="Videos"/>
+        <formFile formName="Login"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
