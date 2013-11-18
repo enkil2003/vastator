@@ -13,6 +13,7 @@ class AdminController extends Zend_Controller_Action
             $this->_redirect('/admin/login');
             exit;
         }
+        $this->view->messages = $this->_helper->flashMessenger->getMessages();
         $this->News = new Application_Model_DbTable_News();
         $this->_helper->_layout->setLayout('admin');
     }
@@ -131,7 +132,9 @@ class AdminController extends Zend_Controller_Action
             if ($form->id && $form->id->getValue()) {
                 $row = $this->News->fetchRow("id = {$form->id->getValue()}");
                 $created = $row->created;
+                $message = "Noticia modificada con éxito";
             } else {
+                $message = "Noticia creada con éxito";
                 $row = $this->News->fetchNew();
                 $created = date('Y-m-d h:i:s');
             }
@@ -150,7 +153,8 @@ class AdminController extends Zend_Controller_Action
                 $row->save();
             }
             
-            $this->view->message = "Notícia creada con éxito";
+            $this->_helper->flashMessenger->addMessage($message);
+            $this->_redirect('/admin/news');
         }
         $this->view->form = $form;
     }
@@ -161,6 +165,7 @@ class AdminController extends Zend_Controller_Action
             $row = $this->News->fetchRow("id = $id");
             $this->_deleteDir(GALLERY_PATH . '/' . $id);
             $row->delete();
+            $this->_helper->flashMessenger->addMessage("Notícia eliminada con éxito");
             $this->_redirect('/admin/news');
             exit;
         }

@@ -24,7 +24,7 @@ tinymce.init({
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" href="/">Vastator</a>
+        <a class="brand" href="/" target="_blank">Vastator</a>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li class="">
@@ -57,6 +57,13 @@ tinymce.init({
   <br />
   <br />
   <br />
+  <?php if (isset($this->messages) && count($this->messages)):?>
+    <div class="alert alert-<?php echo $this->messagesType ? $this->messagesType : 'success'; ?>">
+      <?php foreach($this->messages as $message): ?>
+        <?php echo $message; ?><br />
+      <?php endforeach;?>
+    </div>
+  <?php endif; ?>
   <?php echo $this->layout()->content; ?>
 </div>
 
