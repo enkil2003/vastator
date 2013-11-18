@@ -62,7 +62,13 @@ class IndexController extends Zend_Controller_Action
 
     public function galleryAction()
     {
-        // action body
+        $year = $this->_request->getParam('date', 2010);
+        $endYear = $year + 10;
+        $galleryModel = new Application_Model_DbTable_Gallery();
+        $galleryData = $galleryModel->fetchAll($galleryModel->select()->where("year > $year AND year < $endYear"));
+        $this->view->gallery = $galleryData->toArray();
+        
+        $this->view->year = $year;
     }
 
     public function discographyAction()

@@ -28,3 +28,12 @@ CREATE TABLE theband (
 );
 
 CREATE INDEX "theband_id" ON "theband" ("id");
+
+CREATE TABLE gallery (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    image VARCHAR(255) NULL,
+    year DATE NOT NULL,
+    description TEXT NULL
+);
+
+CREATE INDEX "gallery_id" ON "gallery" ("id");

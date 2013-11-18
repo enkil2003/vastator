@@ -70,4 +70,26 @@ class AdminController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function galleryAction()
+    {
+        $form = new Application_Form_Gallery();
+            if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            if (!$form->image->receive()) {
+                $this->view->message = 'No se pudo guardar la imagen';
+            } else {
+                $galleryModel = new Application_Model_DbTable_Gallery();
+                $galleryModel->insert(
+                    array(
+                        'year' => $form->year->getValue(),
+                        'description' => $form->description->getValue(),
+                        'image' => $form->image->getValue(),
+                    )
+                );
+                $form->reset();
+                $this->view->message = "Imagen agregada con exito";
+            }
+        }
+        $this->view->form = $form;
+    }
+
 }

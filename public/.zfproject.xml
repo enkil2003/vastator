@@ -16,6 +16,7 @@
         <formFile formName="News"/>
         <formFile formName="Tour"/>
         <formFile formName="Theband"/>
+        <formFile formName="Gallery"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
@@ -23,6 +24,7 @@
           <dbTableFile dbTableName="News"/>
           <dbTableFile dbTableName="Tour"/>
           <dbTableFile dbTableName="Theband"/>
+          <dbTableFile dbTableName="Gallery"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
