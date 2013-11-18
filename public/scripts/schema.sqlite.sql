@@ -11,12 +11,12 @@ CREATE TABLE news (
     created DATETIME NOT NULL
 );
  
-CREATE INDEX "id" ON "news" ("id");
+CREATE INDEX "news_id" ON "news" ("id");
 
 CREATE TABLE tour (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    location VARCHAR(255) NOT NULL,
-    when DATETIME NOT NULL
+    location VARCHAR(255) NULL,
+    created DATETIME NOT NULL
 );
 
-CREATE INDEX "id" ON "tour" ("id");
+CREATE INDEX "tour_id" ON "tour" ("id");

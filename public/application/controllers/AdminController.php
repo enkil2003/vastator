@@ -18,16 +18,33 @@ class AdminController extends Zend_Controller_Action
                 $newsModel = new Application_Model_DbTable_News();
                 $newsModel->insert(
                     array(
-                        'title' => $this->_request->getPost('title'),
+                        'title' => $form->title->getValue(),
                         'image' => $form->image->getValue(),
-                        'youtube' => $this->_request->getPost('youtube', ''),
-                        'comment' => $this->_request->getPost('comment'),
+                        'youtube' => $form->youtube->getValue(),
+                        'comment' => $form->comment->getValue(),
                         'created' => date('Y-m-d h:i:s')
                     )
                 );
                 $form->reset();
-                $this->view->message = $form->image->getValue();
+                $this->view->message = "Noticia creada con exito";
             }
+        }
+        $this->view->form = $form;
+    }
+
+    public function tourAction()
+    {
+        $form = new Application_Form_Tour();
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            $tourModel = new Application_Model_DbTable_Tour();
+            $tourModel->insert(
+                array(
+                    'location' => $form->location->getValue(),
+                    'created' => $form->created->getValue()
+                )
+            );
+            $form->reset();
+            $this->view->message = "Tour date creada con exito";
         }
         $this->view->form = $form;
     }

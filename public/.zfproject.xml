@@ -14,11 +14,13 @@
       </controllersDirectory>
       <formsDirectory enabled="false">
         <formFile formName="News"/>
+        <formFile formName="Tour"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
         <dbTableDirectory>
           <dbTableFile dbTableName="News"/>
+          <dbTableFile dbTableName="Tour"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

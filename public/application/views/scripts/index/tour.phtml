@@ -1,32 +1,20 @@
 <div class="row">
+  <?php $lastPrintedYear = null; ?>
+  <?php foreach($this->tour as $tour): ?>
+  <?php
+  $year = array_pop(explode('/', $tour['created']));
+  if ($year != $lastPrintedYear):
+    $lastPrintedYear = $year;
+  ?>
   <div class="span12">
-    <h3>2014</h3>
+    <h3><?php echo $year; ?></h3>
   </div>
+  <?php endif; ?>
   <div class="span3">
-    Sabado 4 de Enero
+    <?php echo $tour['created']; ?>
   </div>
   <div class="span9">
-    Grabación disco en vivo
+    <?php echo $tour['location']; ?>
   </div>
-  <div class="span12">
-    <h3>2013</h3>
-  </div>
-  <div class="span3">
-    Sabado 7 de Diciembre
-  </div>
-  <div class="span9">
-    Maipu
-  </div>
-  <div class="span3">
-    Sabado 3 de Agosto
-  </div>
-  <div class="span9">
-    Recoleta
-  </div>
-  <div class="span3">
-    Sabado 6 de Julio
-  </div>
-  <div class="span9">
-    Oxido Bar
-  </div>
+  <?php endforeach; ?>
 </div>
