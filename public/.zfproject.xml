@@ -17,6 +17,7 @@
         <formFile formName="Tour"/>
         <formFile formName="Theband"/>
         <formFile formName="Gallery"/>
+        <formFile formName="Slider"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>

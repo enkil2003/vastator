@@ -2,15 +2,30 @@
 
 class AdminController extends Zend_Controller_Action
 {
-
+    const IMAGE_WIDTH = 860;
+    const IMAGE_HEIGHT = 500;
+    const IMAGE_QUALITY = 75;
     public function init()
     {
         $this->_helper->_layout->setLayout('admin');
     }
     
     public function indexAction() {
-        $this->_redirect('/admin/news');
-        die;
+        $form = new Application_Form_Slider();
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            if (!$form->image->receive()) {
+                $this->view->message = 'No se pudo guardar la imagen';
+            } else {
+                require_once APPLICATION_PATH . "/../library/PEAR/WideImage/WideImage.php";
+                $image = WideImage::load(APPLICATION_PATH . '/../img/slider/' . $form->image->getValue());
+                $image->resize(self::IMAGE_WIDTH, self::IMAGE_HEIGHT, 'outside')
+                    ->crop('center', 'center', self::IMAGE_WIDTH, self::IMAGE_HEIGHT)
+                    ->saveToFile(APPLICATION_PATH . '/../img/slider/' . $form->image->getValue(), self::IMAGE_QUALITY);
+                $form->reset();
+                $this->view->message = "Imagen agregada con exito";
+            }
+        }
+        $this->view->form = $form;
     }
 
     public function newsAction()

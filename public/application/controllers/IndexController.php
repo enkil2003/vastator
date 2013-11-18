@@ -10,7 +10,7 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $dirHandler = opendir(APPLICATION_PATH . '/../img/gallery');
+        $dirHandler = opendir(APPLICATION_PATH . '/../img/slider');
         $photos = array();
         while($file = readdir($dirHandler)) {
             if (is_dir($file)) {
