@@ -48,7 +48,9 @@ class IndexController extends Zend_Controller_Action
 
     public function theBandAction()
     {
-        // action body
+        $theBandModel = new Application_Model_DbTable_Theband();
+        $bandData = $theBandModel->fetchRow();
+        $this->view->band = $bandData->toArray();
     }
 
     public function tourAction()

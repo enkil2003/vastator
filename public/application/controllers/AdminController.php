@@ -49,4 +49,25 @@ class AdminController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function theBandAction()
+    {
+        $form = new Application_Form_Theband();
+            if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            if (!$form->image->receive()) {
+                $this->view->message = 'No se pudo guardar la imagen';
+            } else {
+                $thebandModel = new Application_Model_DbTable_Theband();
+                $thebandModel->insert(
+                    array(
+                        'image' => $form->image->getValue(),
+                        'history' => $form->history->getValue(),
+                    )
+                );
+                $form->reset();
+                $this->view->message = "Historia creada con exito";
+            }
+        }
+        $this->view->form = $form;
+    }
+
 }

@@ -15,12 +15,14 @@
       <formsDirectory enabled="false">
         <formFile formName="News"/>
         <formFile formName="Tour"/>
+        <formFile formName="Theband"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
         <dbTableDirectory>
           <dbTableFile dbTableName="News"/>
           <dbTableFile dbTableName="Tour"/>
+          <dbTableFile dbTableName="Theband"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

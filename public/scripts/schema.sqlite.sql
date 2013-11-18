@@ -20,3 +20,11 @@ CREATE TABLE tour (
 );
 
 CREATE INDEX "tour_id" ON "tour" ("id");
+
+CREATE TABLE theband (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    image VARCHAR(255) NULL,
+    history TEXT
+);
+
+CREATE INDEX "theband_id" ON "theband" ("id");
