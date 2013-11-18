@@ -7,6 +7,11 @@ class AdminController extends Zend_Controller_Action
     {
         $this->_helper->_layout->setLayout('admin');
     }
+    
+    public function indexAction() {
+        $this->_redirect('/admin/news');
+        die;
+    }
 
     public function newsAction()
     {
