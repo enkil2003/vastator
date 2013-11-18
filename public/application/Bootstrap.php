@@ -2,11 +2,6 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-    protected function _initDbAdapter() {
-        $this->bootstrap('db');
-        Zend_Registry::set('db' , $this->getResource('db'));
-    }
-    
     /**
      * Configures Zend Router settings.
      * @return Zend_Controller_Router_Interface
