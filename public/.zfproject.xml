@@ -18,6 +18,7 @@
         <formFile formName="Theband"/>
         <formFile formName="Gallery"/>
         <formFile formName="Slider"/>
+        <formFile formName="Videos"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
@@ -26,6 +27,7 @@
           <dbTableFile dbTableName="Tour"/>
           <dbTableFile dbTableName="Theband"/>
           <dbTableFile dbTableName="Gallery"/>
+          <dbTableFile dbTableName="Videos"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

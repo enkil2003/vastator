@@ -37,3 +37,10 @@ CREATE TABLE IF NOT EXISTS gallery (
 );
 
 CREATE INDEX IF NOT EXISTS "gallery_id" ON "gallery" ("id");
+
+CREATE TABLE IF NOT EXISTS videos (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    youtube VARCHAR(255) NULL
+);
+
+CREATE INDEX IF NOT EXISTS "videos_id" ON "videos" ("id");

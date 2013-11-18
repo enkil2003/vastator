@@ -27,6 +27,25 @@ class AdminController extends Zend_Controller_Action
         }
         $this->view->form = $form;
     }
+    
+    public function videosAction() {
+        $form = new Application_Form_Videos();
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            $videosModel = new Application_Model_DbTable_Videos();
+            $url = $form->youtube->getValue();
+            if (strpos($url, 'v=')) {
+                $url = array_pop(explode('v=', $url));
+            }
+            $videosModel->insert(
+                array(
+                    'youtube' => $url,
+                )
+            );
+            $form->reset();
+            $this->view->message = "Video agregado exito";
+        }
+        $this->view->form = $form;
+    }
 
     public function newsAction()
     {

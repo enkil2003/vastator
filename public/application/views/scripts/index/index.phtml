@@ -8,7 +8,7 @@
 <div class="row">
   <?php foreach($this->videos as $video): ?>
   <div class="span6">
-    <iframe width="465" height="349" src="//www.youtube.com/embed/<?php echo $video; ?>" frameborder="0" allowfullscreen></iframe>
+    <iframe width="465" height="349" src="//www.youtube.com/embed/<?php echo $video['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
   </div>
   <?php endforeach; ?>
 </div>
