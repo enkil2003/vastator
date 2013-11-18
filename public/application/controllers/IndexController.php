@@ -50,7 +50,9 @@ class IndexController extends Zend_Controller_Action
     {
         $theBandModel = new Application_Model_DbTable_Theband();
         $bandData = $theBandModel->fetchRow();
-        $this->view->band = $bandData->toArray();
+        if (count($bandData)) {
+            $this->view->band = $bandData->toArray();
+        }
     }
 
     public function tourAction()
