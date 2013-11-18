@@ -1,4 +1,27 @@
 <h3>Slider del Home</h3>
-<?php
-echo $this->form;
-?>
+<form id="sliderForm" method="post" action="">
+  <p>Seleccione imagenes a eliminar</p>
+<?php foreach($this->photos as $photo): ?>
+  <img src="/img/slider/<?php echo $photo ; ?>" width="100" />
+  <input type="checkbox" name="delete[]" value="<?php echo $photo; ?>" />
+  <br />
+  <br />
+<?php endforeach; ?>
+  <button id="deletePhotos">Eliminar Fotos</button>
+  <button id="addPhotos">Agregar</button>
+</form>
+<script>
+$('#deletePhotos').on({
+    click: function(e) {
+        if (confirm("Esta seguro de querer eliminar estas imagenes? Esta accion no puede deshacerse")) {
+            $('#sliderForm').submit();
+        }
+    }
+})
+$('#addPhotos').on({
+    click: function(e) {
+        e.preventDefault();
+        window.location = '/admin/add-slider';
+    }
+});
+</script>

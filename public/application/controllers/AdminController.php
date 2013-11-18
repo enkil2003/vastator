@@ -56,12 +56,31 @@ class AdminController extends Zend_Controller_Action
     }
     
     public function indexAction() {
+        if ($this->_request->isPost()) {
+            $post = $this->_request->getPost();
+            foreach($post['delete'] as $imageToDelete) {
+                unlink(APPLICATION_PATH . "/../img/slider/{$imageToDelete}");
+            }
+        }
+        
+        $dirHandler = opendir(APPLICATION_PATH . '/../img/slider');
+        $photos = array();
+        while($file = readdir($dirHandler)) {
+            if (is_dir($file)) {
+                continue;
+            }
+            $photos[] = $file;
+        }
+        $this->view->photos = $photos;
+    }
+    
+    public function addSliderAction() {
         $form = new Application_Form_Slider();
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             if (!$form->image->receive()) {
                 $this->view->message = 'No se pudo guardar la imagen';
             } else {
-                $this->_shrinkImage($pathToImage);
+                $this->_shrinkImage(APPLICATION_PATH . "/../img/slider/{$form->image->getValue()}");
                 $form->reset();
                 $this->view->message = "Imagen agregada con exito";
             }
