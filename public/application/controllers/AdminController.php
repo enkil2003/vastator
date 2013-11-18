@@ -188,8 +188,9 @@ class AdminController extends Zend_Controller_Action
                     'created' => $form->created->getValue()
                 )
             );
-            $form->reset();
-            $this->view->message = "Tour date creada con exito";
+            $this->_helper->flashMessenger->addMessage("Tour date creado con exito");
+            $this->_redirect('/admin/tour');
+            exit;
         }
         $this->view->form = $form;
     }
