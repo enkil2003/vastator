@@ -52,7 +52,7 @@ class IndexController extends Zend_Controller_Action
     public function tourAction()
     {
         $tourModel = new Application_Model_DbTable_Tour();
-        $tourData = $tourModel->fetchAll($tourModel->select()->order('created ASC'));
+        $tourData = $tourModel->fetchAll($tourModel->select()->order('created DESC'));
         $this->view->tour = $tourData->toArray();
     }
 
