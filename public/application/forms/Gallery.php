@@ -9,8 +9,11 @@ class Application_Form_Gallery extends Zend_Form
             'file',
             'image',
             array(
-                'label' => 'Seleccione una imagen',
-                'required' => true
+                'label' => 'Imagen',
+                'destination' => APPLICATION_PATH . '/../img/gallery',
+                'validators' => array(
+                    'Extension' => 'jpg,jpeg'
+                )
             )
         );
         

@@ -228,9 +228,9 @@ class AdminController extends Zend_Controller_Action
     public function theBandAction()
     {
         $form = new Application_Form_Theband();
-            if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             if (!$form->image->receive()) {
-                $this->view->message = 'No se pudo guardar la imagen';
+                $this->_helper->flashMessenger->addMessage('No se pudo guardar la imagen');
             } else {
                 $thebandModel = new Application_Model_DbTable_Theband();
                 $thebandModel->insert(
@@ -239,8 +239,8 @@ class AdminController extends Zend_Controller_Action
                         'history' => $form->history->getValue(),
                     )
                 );
-                $form->reset();
-                $this->view->message = "Historia creada con exito";
+                $this->_helper->flashMessenger->addMessage("Historia creada con exito");
+                $this->_redirect('/admin/the-band');
             }
         }
         $this->view->form = $form;
@@ -249,9 +249,9 @@ class AdminController extends Zend_Controller_Action
     public function galleryAction()
     {
         $form = new Application_Form_Gallery();
-            if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+        if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             if (!$form->image->receive()) {
-                $this->view->message = 'No se pudo guardar la imagen';
+                $this->_helper->flashMessenger->addMessage('No se pudo guardar la imagen');
             } else {
                 $galleryModel = new Application_Model_DbTable_Gallery();
                 $galleryModel->insert(
@@ -261,8 +261,9 @@ class AdminController extends Zend_Controller_Action
                         'image' => $form->image->getValue(),
                     )
                 );
-                $form->reset();
-                $this->view->message = "Imagen agregada con exito";
+                $this->_shrinkImage(APPLICATION_PATH . '/../img/gallery/' . $form->image->getValue());
+                $this->_helper->flashMessenger->addMessage("Imagen agregada con exito");
+                $this->_redirect('/admin/gallery');
             }
         }
         $this->view->form = $form;
