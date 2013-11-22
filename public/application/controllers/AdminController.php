@@ -132,13 +132,13 @@ class AdminController extends Zend_Controller_Action
     private function _move_uploaded_file($file, $folder)
     {
         $this->_deleteDir(GALLERY_PATH . '/' . $folder);
-        $this->_shrinkImage(GALLERY_PATH . "/{$file}");
         mkdir(GALLERY_PATH . '/' . $folder);
         copy(
             GALLERY_PATH . "/{$file}",
             GALLERY_PATH . "/{$folder}/{$file}"
         );
         @unlink(GALLERY_PATH . "/{$file}");
+        return GALLERY_PATH . "/{$folder}/{$file}";
     }
     
     public function addNewsAction()
@@ -167,7 +167,10 @@ class AdminController extends Zend_Controller_Action
             
             if ($form->image->getValue()) {
                 $form->image->receive();
-                $this->_move_uploaded_file($form->image->getValue(), $row->id);
+                $file = $this->_move_uploaded_file($form->image->getValue(), $row->id);
+                if ($form->shrink->getValue()) {
+                    $this->_shrinkImage($file);
+                }
                 $image = $form->image->getValue();
                 $row->image = $image;
                 $row->save();

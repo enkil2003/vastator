@@ -20,12 +20,6 @@ class IndexController extends Zend_Controller_Action
         }
         shuffle($photos);
         $this->view->photos = $photos;
-        
-        $videosModel = new Application_Model_DbTable_Videos();
-        $videosData = $videosModel->fetchAll();
-        if ($videosData) {
-            $this->view->videos = $videosData->toArray();
-        }
     }
 
     public function newsAction()
@@ -72,9 +66,13 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
-    public function mediaAction()
+    public function videosAction()
     {
-        // action body
+        $videosModel = new Application_Model_DbTable_Videos();
+        $videosData = $videosModel->fetchAll();
+        if ($videosData) {
+            $this->view->videos = $videosData->toArray();
+        }
     }
 
 }

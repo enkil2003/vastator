@@ -47,11 +47,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     'action' => 'the-band'
                 )
             ),
-            'media' => new Zend_Controller_Router_Route(
-                'media',
+            'videos' => new Zend_Controller_Router_Route(
+                'videos',
                 array(
                     'controller' => 'index',
-                    'action' => 'media'
+                    'action' => 'videos'
                 )
             ),
             // Error Controller

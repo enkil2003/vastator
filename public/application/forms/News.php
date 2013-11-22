@@ -34,6 +34,16 @@ class Application_Form_News extends Zend_Form
         );
         
         $this->addElement(
+            'checkbox',
+            'shrink',
+            array(
+                'description' => 'Esto puede no encuadrar bien la imagen',
+                'label' => '¿Achicar imagen automaticamente en el servidor?',
+                'destination' => APPLICATION_PATH . '/../img/gallery'
+            )
+        );
+        
+        $this->addElement(
             'text',
             'youtube',
             array(
