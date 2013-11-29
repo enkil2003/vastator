@@ -1,18 +1,17 @@
 <div class="row">
   <div class="span12">
     <select id="changeGallery">
-      <option value="-1">Actuales</option>
-      <option value="2000" <?php if ($this->year == 2000) echo 'selected="selected"'?>>2000's</option>
-      <option value="1990" <?php if ($this->year == 1990) echo 'selected="selected"'?>>1990's</option>
-      <option value="1980" <?php if ($this->year == 1980) echo 'selected="selected"'?>>1980's</option>
+      <option value="-1">Seleccione una galeria</option>
+      <?php foreach($this->gallery as $gallery):?>
+      <option <?php echo $gallery['id'] == $this->selected? 'selected="selected"':'' ?> value="<?php echo $gallery['id']; ?>"><?php echo $gallery['description']?></option>
+      <?php endforeach; ?>
     </select>
   </div>
 </div>
 <div class="slider-wrapper theme-default">
   <div id="slider" class="nivoSlider">
-    <?php foreach($this->gallery as $image):?>
-    <img src="/img/gallery/<?php echo $image['image']; ?>" data-thumb="/img/gallery/<?php echo $image['image']; ?>"
-      alt="<?php echo $image['description']; ?>" />
+    <?php foreach($this->images as $image):?>
+    <img src="/img/gallery/<?php echo $image['gallery_id']; ?>/<?php echo $image['image']; ?>" data-thumb="/img/gallery/<?php echo $image['gallery_id']; ?>/<?php echo $image['image']; ?>" />
     <?php endforeach; ?>
   </div>
 </div>
@@ -25,7 +24,7 @@ $('#changeGallery').on({
         if ($(this).val() == -1) {
             window.location = '/gallery';
         } else {
-            window.location = '/gallery?date=' + $(this).val();
+            window.location = '/gallery?id=' + $(this).val();
         }
     }
 });

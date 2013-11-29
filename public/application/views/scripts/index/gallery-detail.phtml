@@ -1,0 +1,13 @@
+<div class="slider-wrapper theme-default">
+  <div id="slider" class="nivoSlider">
+    <?php foreach($this->gallery as $image):?>
+    <img src="/img/gallery/<?php echo $image['gallery_id']; ?>/<?php echo $image['image']; ?>" data-thumb="/img/gallery/<?php echo $image['gallery_id']; ?>/<?php echo $image['image']; ?>"
+      alt="<?php echo $image['description']; ?>" />
+    <?php endforeach; ?>
+  </div>
+</div>
+<script type="text/javascript">
+$(function() {
+  $('#slider').nivoSlider();
+});
+</script>

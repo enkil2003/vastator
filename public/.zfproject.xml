@@ -29,6 +29,7 @@
           <dbTableFile dbTableName="Theband"/>
           <dbTableFile dbTableName="Gallery"/>
           <dbTableFile dbTableName="Videos"/>
+          <dbTableFile dbTableName="Images"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

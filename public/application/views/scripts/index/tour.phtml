@@ -13,8 +13,13 @@
   <div class="span3">
     <?php echo $tour['created']; ?>
   </div>
-  <div class="span9">
+  <div class="span7">
     <?php echo $tour['location']; ?>
+    <?php if ($tour['gallery_id']): ?>
+  </div>
+  <div class="span2">
+    <a href="/index/gallery-detail?id=<?php echo $tour['gallery_id']?>">Ver Imagenes</a>
+    <?php endif; ?>
   </div>
   <?php endforeach; ?>
 </div>

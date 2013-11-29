@@ -9,9 +9,11 @@ class AdminController extends Zend_Controller_Action
     public function init()
     {
         $this->user = new Zend_Session_Namespace('user');
-        if (!isset($this->user->logged) && $this->_request->getActionName() != 'login') {
-            $this->_redirect('/admin/login');
-            exit;
+        if (!isset($_COOKIE['logged'])) {
+            if (!isset($this->user->logged) && $this->_request->getActionName() != 'login') {
+                $this->_redirect('/admin/login');
+                exit;
+            }
         }
         $this->view->messages = $this->_helper->flashMessenger->getMessages();
         $this->News = new Application_Model_DbTable_News();
@@ -25,6 +27,9 @@ class AdminController extends Zend_Controller_Action
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             if ($form->user->getValue() == 'v4st4t0r' && $form->password->getValue() == 'tator771r') {
                 $this->user->logged = true;
+                if ($form->remember->getValue()) {
+                    setcookie('logged', true, time() + (60 * 60 * 24 * 365));
+                }
                 $this->_redirect('/admin/');
                 exit;
             } else {
@@ -36,6 +41,8 @@ class AdminController extends Zend_Controller_Action
     
     public function logoutAction()
     {
+        unset($_COOKIE['logged']);
+        setcookie('logged', null, -1, '/');
         $this->user->unsetAll();
         $this->_redirect('/');
         exit;
