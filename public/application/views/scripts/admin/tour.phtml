@@ -2,19 +2,34 @@
 <form>
 <select id="tourABM">
 <?php foreach($this->tour as $tour):?>
-  <option value="<?php echo $tour['id'];?>"><?php echo $tour['created']; ?> | <?php echo $tour['location']; ?></option>
+  <option value="<?php echo $tour['id'];?>" data-gallery="<?php echo $tour['gallery_id'];?>"><?php echo $tour['location']; ?> | <?php echo $tour['created']; ?></option>
 <?php endforeach;?>
 </select>
 <br />
+<select id="galerias">
+  <option value="-1">Sin Galeria</option>
+<?php foreach($this->galleries as $gallery):?>
+  <option value="<?php echo $gallery['id'];?>"><?php echo $gallery['description']; ?> | <?php echo date('Y-m-d', $gallery['date']); ?></option>
+<?php endforeach;?>
+</select>
 <br />
-<button id="addTour" type="button">Nueva</button> 
-<button id="deleteTour" type="button">Eliminar</button>
+<button id="addTour" type="button">Nuevo Tour</button> 
+<button id="deleteTour" type="button">Eliminar Tour</button>
+<button id="addGallery" type="button" disabled="disabled">Asociar Galeria a Tour</button>
 </form>
 <script language="javascript">
 $('#addTour').on({
     'click': function() {
         window.location = '/admin/add-tour';
-    }
+    },
+});
+$('#tourABM').on({
+    'change': function() {
+        var gallery_id = $(this).find('option[value="' + $('#tourABM').val() + '"]').attr('data-gallery');
+        if (gallery_id != null) {
+            $('#galerias').val(gallery_id);
+        }
+    },
 });
 $('#deleteTour').on({
     'click': function() {
@@ -23,4 +38,15 @@ $('#deleteTour').on({
         }
     }
 });
+$('#addGallery').on({
+    'click': function() {
+        window.location = '/admin/add-tour?id=' + $('#tourABM').val() + '&gallery_id=' + $('#galerias').val();
+    }
+});
+$('#galerias').on({
+    'change': function() {
+        $('#addGallery').removeAttr('disabled');
+    }
+});
+
 </script>

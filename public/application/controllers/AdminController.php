@@ -2,11 +2,27 @@
 
 class AdminController extends Zend_Controller_Action
 {
-    const IMAGE_WIDTH = 860;
-    const IMAGE_HEIGHT = 500;
+    const IMAGE_WIDTH = 800;
+    const IMAGE_HEIGHT = 600;
     const IMAGE_QUALITY = 75;
     
     public function init()
+    {
+        $this->_redirectIfNotLogged();
+        $this->_initModels();
+        $this->view->messages = $this->_helper->flashMessenger->getMessages();
+        $this->_helper->_layout->setLayout('admin');
+    }
+    
+    private function _initModels()
+    {
+        $this->News = new Application_Model_DbTable_News();
+        $this->Tour = new Application_Model_DbTable_Tour();
+        $this->TheBandModel = new Application_Model_DbTable_Theband();
+        $this->GalleryModel = new Application_Model_DbTable_Gallery();
+    }
+    
+    private function _redirectIfNotLogged()
     {
         $this->user = new Zend_Session_Namespace('user');
         if (!isset($_COOKIE['logged'])) {
@@ -15,10 +31,6 @@ class AdminController extends Zend_Controller_Action
                 exit;
             }
         }
-        $this->view->messages = $this->_helper->flashMessenger->getMessages();
-        $this->News = new Application_Model_DbTable_News();
-        $this->Tour = new Application_Model_DbTable_Tour();
-        $this->_helper->_layout->setLayout('admin');
     }
     
     public function loginAction()
@@ -73,7 +85,7 @@ class AdminController extends Zend_Controller_Action
         $dirHandler = opendir(APPLICATION_PATH . '/../img/slider');
         $photos = array();
         while($file = readdir($dirHandler)) {
-            if (is_dir($file)) {
+            if (!strpos(strtolower($file), 'jpg')) {
                 continue;
             }
             $photos[] = $file;
@@ -87,9 +99,8 @@ class AdminController extends Zend_Controller_Action
             if (!$form->image->receive()) {
                 $this->view->message = 'No se pudo guardar la imagen';
             } else {
-                $this->_shrinkImage(APPLICATION_PATH . "/../img/slider/{$form->image->getValue()}");
-                $form->reset();
-                $this->view->message = "Imagen agregada con exito";
+                $this->_redirect("/admin/crop-image?imageName={$form->image->getValue()}");
+                die;
             }
         }
         $this->view->form = $form;
@@ -177,12 +188,22 @@ class AdminController extends Zend_Controller_Action
             if ($form->image->getValue()) {
                 $form->image->receive();
                 $file = $this->_move_uploaded_file($form->image->getValue(), $row->id);
-                if ($form->shrink->getValue()) {
-                    $this->_shrinkImage($file);
-                }
                 $image = $form->image->getValue();
                 $row->image = $image;
                 $row->save();
+                
+                if ($form->shrink->getValue()) {
+                    $this->_helper->flashMessenger->addMessage("Debe recortar la imagen");
+                    $this->_redirect("/admin/crop-image?imageName={$form->image->getValue()}&folder={$row->id}");
+                } else {
+                    $destination_folder = realpath(APPLICATION_PATH . "/../img/gallery/{$row->id}") . '/resized';
+                    mkdir($destination_folder);
+                    chmod($destination_folder, 0777);
+                    require_once APPLICATION_PATH . "/../library/PEAR/WideImage/WideImage.php";
+                    $image = WideImage::load(realpath(APPLICATION_PATH . "/../img/gallery/{$row->id}") . '/' .$form->image->getValue());
+                    $image->resize(800, 600)->saveToFile("$destination_folder/{$form->image->getValue()}", self::IMAGE_QUALITY);
+                    chmod("$destination_folder/{$form->image->getValue()}", 0777);
+                }
             }
             
             $this->_helper->flashMessenger->addMessage($message);
@@ -206,6 +227,7 @@ class AdminController extends Zend_Controller_Action
     public function tourAction()
     {
         $tourData = $this->Tour->fetchAll($this->Tour->select()->order('created DESC'));
+        $this->view->galleries = $this->GalleryModel->fetchAll()->toArray();
         $this->view->tour = $tourData->toArray();
     }
 
@@ -220,6 +242,15 @@ class AdminController extends Zend_Controller_Action
                 )
             );
             $this->_helper->flashMessenger->addMessage("Tour date creado con exito");
+            $this->_redirect('/admin/tour');
+            exit;
+        }
+        if ($this->_request->getParam('id') && $this->_request->getParam('gallery_id')) {
+            $this->TourModel = new Application_Model_DbTable_Tour();
+            $tour = $this->TourModel->fetchRow("id = " . $this->_request->getParam('id'));
+            $tour->gallery_id = ($this->_request->getParam('gallery_id') != -1) ? $this->_request->getParam('gallery_id') : null;
+            $tour->save();
+            $this->_helper->flashMessenger->addMessage("Galeria agregada a Tour con exito");
             $this->_redirect('/admin/tour');
             exit;
         }
@@ -244,8 +275,7 @@ class AdminController extends Zend_Controller_Action
             if (!$form->image->receive()) {
                 $this->_helper->flashMessenger->addMessage('No se pudo guardar la imagen');
             } else {
-                $thebandModel = new Application_Model_DbTable_Theband();
-                $thebandModel->insert(
+                $this->TheBandModel->insert(
                     array(
                         'image' => $form->image->getValue(),
                         'history' => $form->history->getValue(),
@@ -278,6 +308,40 @@ class AdminController extends Zend_Controller_Action
                 $this->_redirect('/admin/gallery');
             }
         }
+        $this->view->form = $form;
+    }
+
+    public function cropImageAction()
+    {
+        $imgName = $this->_getParam('imageName');
+        $folder = $this->_getParam('folder', '../slider');
+        
+        $form = new Application_Form_Crop();
+        
+        if($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
+            $destination_folder = realpath(APPLICATION_PATH . "/../img/gallery/{$folder}") . '/resized';
+            @mkdir($destination_folder);
+            chmod($destination_folder, 0777);
+            require_once APPLICATION_PATH . "/../library/PEAR/WideImage/WideImage.php";
+            $image = WideImage::load(realpath(APPLICATION_PATH . "/../img/gallery/{$folder}") . '/' .$imgName);
+            $image->crop($form->getValue('x'), $form->getValue('y'), $form->getValue('w'), $form->getValue('h'))
+                  ->resize(800, 600)
+                  ->saveToFile("$destination_folder/$imgName", self::IMAGE_QUALITY);
+            chmod("$destination_folder/$imgName", 0777);
+            
+            if ('../slider' != $folder) {
+                $this->_redirect('/admin/add-news?id=' . $folder);
+            } else {
+                $this->_redirect('/admin/');
+            }
+            die;
+        }
+        
+        $this->view->fileName = $imgName;
+        $this->view->fileOriginalPath = "/img/gallery/{$folder}/$imgName";
+        $this->view->imgWidth = self::IMAGE_WIDTH;
+        $this->view->imgHeight = self::IMAGE_HEIGHT;
+        
         $this->view->form = $form;
     }
 

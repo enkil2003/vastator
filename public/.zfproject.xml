@@ -20,6 +20,7 @@
         <formFile formName="Slider"/>
         <formFile formName="Videos"/>
         <formFile formName="Login"/>
+        <formFile formName="Crop"/>
       </formsDirectory>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory>
@@ -41,6 +42,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Error">
             <viewScriptFile forActionName="error"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="admin">
+            <viewScriptFile forActionName="crop-image"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

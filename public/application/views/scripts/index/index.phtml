@@ -1,7 +1,8 @@
 <div class="slider-wrapper theme-default">
   <div id="slider" class="nivoSlider">
   <?php foreach($this->photos as $photo): ?>
-    <img src="/img/slider/<?php echo $photo?>" data-thumb="/img/slider/<?php echo $photo; ?>" alt="" />
+    <?php if (!file_exists(APPLICATION_PATH . "/../img/slider/resized/{$photo}")) continue; ?>
+    <img src="/img/slider/resized/<?php echo $photo?>" data-thumb="/img/slider/<?php echo $photo; ?>" alt="" />
   <?php endforeach; ?>
   </div>
 </div>

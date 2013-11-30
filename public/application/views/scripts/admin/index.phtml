@@ -3,6 +3,7 @@
   <p>Seleccione imagenes a eliminar</p>
 <?php foreach($this->photos as $photo): ?>
   <img src="/img/slider/<?php echo $photo ; ?>" width="100" />
+  <a href="/admin/crop-image?imageName=<?php echo $photo; ?>">Editar Imagen</a>
   <input type="checkbox" name="delete[]" value="<?php echo $photo; ?>" />
   <br />
   <br />

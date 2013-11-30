@@ -12,7 +12,7 @@ class Application_Form_Slider extends Zend_Form
             'image',
             array(
                 'label' => 'Imagen',
-                'destination' => APPLICATION_PATH . '/../img/slider',
+                'destination' => realpath(APPLICATION_PATH . '/../img/slider'),
                 'validators' => array(
                     'Extension' => 'jpg,jpeg'
                 )

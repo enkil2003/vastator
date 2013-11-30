@@ -1,0 +1,49 @@
+<?php $this->headScript()->appendFile('/js/jquery.Jcrop.min.js');
+$this->headLink()->appendStylesheet('/js/jquery.Jcrop.min.css');
+?>
+<?php $this->headScript()->captureStart(); ?>
+  $(function(){
+    var sizeX = <?php echo $this->imgWidth;?>;
+    var sizeY = <?php echo $this->imgHeight;?>;
+    var ratio = sizeX / sizeY;
+    $('#cropbox').Jcrop({
+      onChange: showCoords,
+      onSelect: showCoords,
+      aspectRatio: ratio,
+      boxWidth: 800, 
+      boxHeight: 600,
+      bgOpacity:   .4
+    });
+ 
+    function showCoords(c)
+    {
+      if (c.w == 0 || c.h == 0) {
+          $('#crop').attr('disabled', 'disabled');
+      } else {
+          $('#crop').removeAttr('disabled');
+      }
+      $('#x').val(c.x);
+      $('#y').val(c.y);
+      $('#w').val(c.w);
+      $('#h').val(c.h);
+    };
+    
+    $('#crop').on({click: function(e) {
+        if ($('#w').val() == 0 || $('#h').val() == 0) {
+            $('#crop').attr('disabled', 'disabled');
+            e.preventDefault();
+            return false;
+        }
+    }});
+  });
+<?php echo $this->headScript()->captureEnd(); ?>
+<style>
+<?php // fix https://github.com/twbs/bootstrap/issues/1649 ?>
+.jcrop-holder img {
+    max-width: none;
+}
+</style>
+<div>
+<img src="<?php echo $this->fileOriginalPath; ?>" id="cropbox" alt="cropbox" />
+</div>
+<?php echo $this->form;?>
