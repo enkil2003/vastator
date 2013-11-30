@@ -144,7 +144,7 @@ class AdminController extends Zend_Controller_Action
                 unlink($file);
             }
         }
-        rmdir($dirPath);
+        @rmdir($dirPath);
     }
     
     private function _move_uploaded_file($file, $folder)
