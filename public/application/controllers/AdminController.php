@@ -140,10 +140,12 @@ class AdminController extends Zend_Controller_Action
     {
         $this->_deleteDir(GALLERY_PATH . '/' . $folder);
         mkdir(GALLERY_PATH . '/' . $folder);
+        chmod(GALLERY_PATH . '/' . $folder, 0777);
         copy(
             GALLERY_PATH . "/{$file}",
             GALLERY_PATH . "/{$folder}/{$file}"
         );
+        chmod(GALLERY_PATH . "/{$folder}/{$file}", 0777);
         @unlink(GALLERY_PATH . "/{$file}");
         return GALLERY_PATH . "/{$folder}/{$file}";
     }
