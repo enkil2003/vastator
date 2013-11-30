@@ -58,7 +58,6 @@ tinymce.init({
   <br />
   <br />
   <br />
-<?php echo time(); ?>
   <?php if (isset($this->messages) && count($this->messages)):?>
     <div class="alert alert-<?php echo $this->messagesType ? $this->messagesType : 'success'; ?>">
       <?php foreach($this->messages as $message): ?>
