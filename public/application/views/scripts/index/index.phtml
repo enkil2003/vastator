@@ -1,17 +1,39 @@
-<div class="slider-wrapper theme-default">
-  <div id="slider" class="span12 nivoSlider">
-  <?php foreach($this->photos as $photo): ?>
-    <?php if (!file_exists(APPLICATION_PATH . "/../img/slider/resized/{$photo}")) continue; ?>
-    <img src="/img/slider/resized/<?php echo $photo?>" data-thumb="/img/slider/<?php echo $photo; ?>" alt="" />
-  <?php endforeach; ?>
+<div class="row">
+  <h3 class="span12">Ultima noticia:</h3>
+  <div class="span8">
+    <?php $news = $this->news; ?>
+    <?php $video = $this->video; ?>
+    <h3><?php echo $news['title']; ?></h3>
+    <p>Publicado:<br /><?php echo $news['created']; ?></p>
+    <?php if ($news['image'] != '' && !is_null($news['youtube'])): ?>
+    <img src="/img/gallery/<?php echo $news['id']; ?>/resized/<?php echo $news['image']; ?>" />
+    <?php endif; ?>
+    <?php if ($news['youtube'] != ''): ?>
+    <iframe width="700" height="525" src="//www.youtube.com/embed/<?php echo $news['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
+    <?php endif; ?>
+    <?php echo $news['comment']; ?>
   </div>
-  <div class="span12">
+  <div class="span4">
     <?php echo $this->partial('partials/twitter.phtml'); ?>
+    <br />
+    <br />
+    <iframe width="300" height="225" src="//www.youtube.com/embed/<?php echo $video['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
   </div>
-  
 </div>
-<script type="text/javascript">
+<br />
+<br />
+<div class="row">
+  <div class="slider-wrapper theme-default">
+    <div id="slider" class="span12 nivoSlider">
+    <?php foreach($this->photos as $photo): ?>
+      <?php if (!file_exists(APPLICATION_PATH . "/../img/slider/resized/{$photo}")) continue; ?>
+      <img src="/img/slider/resized/<?php echo $photo?>" data-thumb="/img/slider/<?php echo $photo; ?>" alt="" />
+    <?php endforeach; ?>
+    </div>
+  </div>
+</div>
+<?php echo $this->inlineScript()->captureStart(); ?>
 $(window).load(function() {
   $('#slider').nivoSlider();
 });
-</script>
+<?php echo $this->inlineScript()->captureEnd(); ?>

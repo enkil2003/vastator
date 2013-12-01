@@ -8,6 +8,8 @@ class IndexController extends Zend_Controller_Action
         $this->view->selected = $this->_request->getActionName();
         $this->Gallery = new Application_Model_DbTable_Gallery();
         $this->Images = new Application_Model_DbTable_Images();
+        $this->News = new Application_Model_DbTable_News();
+        $this->Videos = new Application_Model_DbTable_Videos();
     }
 
     public function indexAction()
@@ -22,12 +24,15 @@ class IndexController extends Zend_Controller_Action
         }
         shuffle($photos);
         $this->view->photos = $photos;
+        
+        $this->view->news = $this->News->fetchRow()->toArray();
+        
+        $this->view->video = $this->Videos->fetchRow()->toArray();
     }
 
     public function newsAction()
     {
-        $news = new Application_Model_DbTable_News();
-        $newsData = $news->fetchAll($news->select()->order('created DESC'));
+        $newsData = $this->News->fetchAll($this->News->select()->order('created DESC'));
         $this->view->news = $newsData->toArray();
     }
 
@@ -84,8 +89,7 @@ class IndexController extends Zend_Controller_Action
 
     public function videosAction()
     {
-        $videosModel = new Application_Model_DbTable_Videos();
-        $videosData = $videosModel->fetchAll();
+        $videosData = $this->Videos->fetchAll();
         if ($videosData) {
             $this->view->videos = $videosData->toArray();
         }
