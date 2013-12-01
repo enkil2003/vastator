@@ -15,7 +15,7 @@
 <br />
 <button id="addTour" type="button">Nuevo Tour</button> 
 <button id="deleteTour" type="button">Eliminar Tour</button>
-<button id="addGallery" type="button" disabled="disabled">Asociar Galeria a Tour</button>
+<button id="addGallery" type="button">Asociar Galeria a Tour</button>
 </form>
 <script language="javascript">
 $('#addTour').on({
@@ -43,10 +43,4 @@ $('#addGallery').on({
         window.location = '/admin/add-tour?id=' + $('#tourABM').val() + '&gallery_id=' + $('#galerias').val();
     }
 });
-$('#galerias').on({
-    'change': function() {
-        $('#addGallery').removeAttr('disabled');
-    }
-});
-
 </script>
