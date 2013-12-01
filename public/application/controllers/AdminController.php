@@ -201,7 +201,7 @@ class AdminController extends Zend_Controller_Action
                     chmod($destination_folder, 0777);
                     require_once APPLICATION_PATH . "/../library/PEAR/WideImage/WideImage.php";
                     $image = WideImage::load(realpath(APPLICATION_PATH . "/../img/gallery/{$row->id}") . '/' .$form->image->getValue());
-                    $image->resize(800, 600)->saveToFile("$destination_folder/{$form->image->getValue()}", self::IMAGE_QUALITY);
+                    $image->resize(800, 600, 'outside')->saveToFile("$destination_folder/{$form->image->getValue()}", self::IMAGE_QUALITY);
                     chmod("$destination_folder/{$form->image->getValue()}", 0777);
                 }
             }

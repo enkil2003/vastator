@@ -1,6 +1,6 @@
 <div class="row">
-  <?php foreach($this->news as $news):?>
   <div class="span9 news">
+  <?php foreach($this->news as $news):?>
     <h3><?php echo $news['title']; ?></h3>
     <p>Publicado:<br /><?php echo $news['created']; ?></p>
     <?php if ($news['image'] != '' && !is_null($news['youtube'])): ?>
@@ -10,11 +10,12 @@
     <iframe width="700" height="525" src="//www.youtube.com/embed/<?php echo $news['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
     <?php endif; ?>
     <?php echo $news['comment']; ?>
+  <?php endforeach; ?>
   </div>
   <div class="span3">
     <?php echo $this->partial('partials/twitter.phtml'); ?>
   </div>
-  <?php endforeach; ?>
+</div>
 <!--
   <div class="span6 news">
     <h3> News Title</h3>
@@ -31,4 +32,3 @@
     <p class="more"><a href="/index/detail">[ More ]</a></p>
   </div>
 -->
-</div>
