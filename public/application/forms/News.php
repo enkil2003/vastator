@@ -6,6 +6,7 @@ class Application_Form_News extends Zend_Form
     public function init()
     {
         $this->setAttrib('enctype', 'multipart/form-data');
+        $this->setName('newsForm');
         
         $this->addElement(
             'hidden',
@@ -38,6 +39,15 @@ class Application_Form_News extends Zend_Form
             'shrink',
             array(
                 'label' => '¿Recortar y encuadrar imagen al finalizar?',
+                'value' => true
+            )
+        );
+        
+        $this->addElement(
+            'checkbox',
+            'facebook',
+            array(
+                'label' => '¿Publicar en Facebook?',
                 'value' => true
             )
         );
