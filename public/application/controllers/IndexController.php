@@ -25,8 +25,7 @@ class IndexController extends Zend_Controller_Action
         shuffle($photos);
         $this->view->photos = $photos;
         
-        $this->view->news = $this->News->fetchRow()->toArray();
-        
+        $this->view->news = $this->News->getLatestNews();
         $this->view->video = $this->Videos->fetchRow()->toArray();
     }
 
