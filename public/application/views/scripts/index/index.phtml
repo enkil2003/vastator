@@ -10,7 +10,9 @@
           <p>Publicado:<br /><?php echo $news['created']; ?></p>
         </div>
         <div class="span4">
-          <img src="/img/gallery/<?php echo $news['id']; ?>/resized/<?php echo $news['image']; ?>" />
+          <a href="/img/gallery/<?php echo $news['id']; ?>/resized/<?php echo $news['image']; ?>" class="fancyLink">
+            <img src="/img/gallery/<?php echo $news['id']; ?>/resized/<?php echo $news['image']; ?>" />
+          </a>
         </div>
       <?php endif; ?>
       <?php if ($news['youtube'] != ''): ?>
@@ -40,8 +42,33 @@
     </div>
   </div>
 </div>
-<?php echo $this->inlineScript()->captureStart(); ?>
-$(window).load(function() {
+
+<?php
+echo $this->inlineScript()->captureStart();
+?>
+$(function() {
   $('#slider').nivoSlider();
+  $(".fancyLink").fancybox({
+    openEffect	: 'elastic',
+    closeEffect	: 'elastic',
+    fitToView: false,
+    helpers : {
+        title : {
+            type : 'inside'
+            }
+        }
+    });
 });
-<?php echo $this->inlineScript()->captureEnd(); ?>
+<?php
+echo $this->inlineScript()->captureEnd();
+?>
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="/js/fancybox/source/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="/js/fancybox/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+<!-- Add Button helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="/js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<script type="text/javascript" src="/js/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<!-- Add Thumbnail helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="/js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+<script type="text/javascript" src="/js/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
