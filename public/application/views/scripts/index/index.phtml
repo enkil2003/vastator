@@ -16,7 +16,9 @@
         </div>
       <?php endif; ?>
       <?php if ($news['youtube'] != ''): ?>
-        <iframe width="700" height="525" src="//www.youtube.com/embed/<?php echo $news['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
+      <div class="span8">
+        <iframe width="620" height="465" src="//www.youtube.com/embed/<?php echo $news['youtube']; ?>" frameborder="0" allowfullscreen></iframe>
+      </div>
       <?php endif; ?>
         <div class="span4">
         <?php echo $news['comment']; ?>
