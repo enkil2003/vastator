@@ -72,3 +72,9 @@ body {
 .member ul {
   margin-left: 320px;
 }
+.index .news_title {
+  margin-top: 35px;
+}
+.index .news_title:first-child {
+  margin-top: inherit;
+}
