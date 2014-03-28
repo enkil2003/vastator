@@ -1,9 +1,10 @@
 <?php $video = $this->video; ?>
-<?php $news = $this->news; ?>
+<?php $latestNews = $this->news; ?>
 <div class="row">
   <h3 class="span12">Ultima noticia:</h3>
   <div class="span8">
     <div class="row">
+    <?php foreach($latestNews as $news):?>
       <?php if ($news['image'] != '' && !is_null($news['youtube'])): ?>
         <div class="span8">
           <h3><?php echo $news['title']; ?></h3>
@@ -23,6 +24,7 @@
         <div class="span4">
         <?php echo $news['comment']; ?>
         </div>
+    <?php endforeach;?>
     </div>
   </div>
   <div class="span4">
