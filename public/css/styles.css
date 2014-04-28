@@ -5,6 +5,8 @@ body {
   font-style: italic;
   background-image: url(/img/bg.jpg);
   background-repeat: no-repeat;
+  background-position-x: 50%;
+  background-attachment: fixed;
 }
 #logo {
   background-image: url(/img/logo.png);
