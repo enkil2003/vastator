@@ -4,8 +4,17 @@ defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/application'));
 
 // Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+if (!defined('APPLICATION_ENV')) {
+    $env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
+    if ($env == 'production') {
+        if ($_COOKIE['proddebug'] || $_GET['proddebug'] == true) {
+            setcookie('proddebug', true);
+            $env = 'proddebug';
+        }
+    }
+    define('APPLICATION_ENV', $env);
+}
+
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
